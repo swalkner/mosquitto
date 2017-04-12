@@ -20,7 +20,7 @@ include_directories(${mosquitto_SOURCE_DIR} ${mosquitto_SOURCE_DIR}/lib
 			${OPENSSL_INCLUDE_DIR} ${PTHREAD_INCLUDE_DIR})
 link_directories(${mosquitto_SOURCE_DIR}/lib)
 
-add_library(libmosquitto SHARED
+set(source_files
 	logging_mosq.c logging_mosq.h
 	memory_mosq.c memory_mosq.h
 	messages_mosq.c messages_mosq.h
@@ -39,7 +39,12 @@ add_library(libmosquitto SHARED
 	time_mosq.c
 	tls_mosq.c
 	util_mosq.c util_mosq.h
-	will_mosq.c will_mosq.h)
+	will_mosq.c will_mosq.h
+)
+
+# our static lib:
+add_library(mosquitto_static ${source_files})
+add_library(libmosquitto SHARED ${source_files})
 
 set (LIBRARIES ${OPENSSL_LIBRARIES} ${PTHREAD_LIBRARIES})
 
